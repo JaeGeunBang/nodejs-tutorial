@@ -82,24 +82,18 @@ exports.create = function(request, response) {
 }
 
 exports.create_process = function(request, response) {
-    var body = '';
-    request.on('data', function(data) {
-        body = body + data;
-    });
-    request.on('end', function() {
-        var post = qs.parse(body);
-        db.query(`
-            INSERT INTO topic (title, description, created, author_id)
-                VALUES(?, ?, NOW(), ?)`,
-            [post.title, post.description, post.author], function(error, result) {
-                if(error) {
-                    throw error;
-                }
-                response.writeHead(302, {Location: `/?id=${result.insertId}`});
-                response.end();
+    var post = request.body;
+    db.query(`
+        INSERT INTO topic (title, description, created, author_id)
+            VALUES(?, ?, NOW(), ?)`,
+        [post.title, post.description, post.author], function(error, result) {
+            if(error) {
+                throw error;
             }
-        );
-    });
+            response.writeHead(302, {Location: `/?id=${result.insertId}`});
+            response.end();
+        }
+    );
 }
 
 exports.update = function(request, response) {
@@ -143,33 +137,21 @@ exports.update = function(request, response) {
 }
 
 exports.update_process = function(request, response) {
-    var body = '';
-    request.on('data', function(data) {
-        body = body + data;
-    });
-    request.on('end', function() {
-        var post = qs.parse(body);
-        db.query('UPDATE topic SET title=?, description=?, author_id=? WHERE id=?',
-            [post.title, post.description, post.author, post.id], function(error, result) {
-            response.writeHead(302, {Location: `/?id=${post.id}`});
-            response.end();
-        });
+    var post = request.body;
+    db.query('UPDATE topic SET title=?, description=?, author_id=? WHERE id=?',
+        [post.title, post.description, post.author, post.id], function(error, result) {
+        response.writeHead(302, {Location: `/?id=${post.id}`});
+        response.end();
     });
 }
 
 exports.delete_process = function(request, response) {
-    var body = '';
-    request.on('data', function(data) {
-        body = body + data;
-    });
-    request.on('end', function() {
-        var post = qs.parse(body);
-        db.query('DELETE FROM topic WHERE id = ?', [post.id], function(error, result) {
-            if(error) {
-                 throw error;
-            }
-            response.writeHead(302, {Location: `/`});
-            response.end();
-        });
+    var post = request.body;
+    db.query('DELETE FROM topic WHERE id = ?', [post.id], function(error, result) {
+        if(error) {
+             throw error;
+        }
+        response.writeHead(302, {Location: `/`});
+        response.end();
     });
 }
