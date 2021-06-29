@@ -11,6 +11,7 @@ module.exports = {
             </head>
             <body>
                 <h1><a href="/">WEB</a></h1>
+                <img src="/images/hello.jpeg" style="width:300px; display:block; margin-top:10px" />
                 <a href="/author">author</a>
                 ${list}
                 ${control}
