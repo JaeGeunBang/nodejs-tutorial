@@ -18,12 +18,13 @@ exports.home = function(request, response) {
     });
 }
 
-exports.page = function(request, response) {
+exports.page = function(request, response, next) {
     var _url = request.url;
     var queryData = url.parse(_url, true).query;
+
     db.query(`SELECT * FROM topic`, function(error, topics) {
         if(error) {
-            throw error;
+            next(error)
         }
         var query = db.query(`SELECT * FROM topic LEFT JOIN author ON
                                 topic.author_id=author.id WHERE

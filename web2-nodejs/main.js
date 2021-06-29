@@ -30,4 +30,12 @@ app.post('/author/create_process', (req, res) => (author.create_process(req, res
 app.get('/author/update', (req, res) => (author.update(req, res)))
 app.post('/author/update_process', (req, res) => (author.update_process(req, res)))
 app.post('/author/delete_process', (req, res) => (author.delete_process(req, res)))
+
+app.use(function(req, res, next) {
+    res.status(404).send('Sorry cant find that!')
+})
+app.use(function(err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+})
 app.listen(3000)
