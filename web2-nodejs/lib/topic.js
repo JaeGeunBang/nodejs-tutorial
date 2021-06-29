@@ -11,7 +11,7 @@ exports.home = function(request, response) {
         var list = template.list(topics);
         var html = template.HTML(title, list,
             `<h2>${title}</h2>${description}`,
-            `<a href="/create">create</a>`
+            `<a href="/topic/create">create</a>`
         );
         response.writeHead(200);
         response.end(html);
@@ -41,9 +41,9 @@ exports.page = function(request, response, next) {
                 ${sanitizeHtml(description)}
                 <p>by ${sanitizeHtml(topic[0].name)}</p>
                 `,
-                ` <a href="/create">create</a>
-                    <a href="/update?id=${queryData.id}">update</a>
-                    <form action="delete_process" method="post">
+                ` <a href="/topic/create">create</a>
+                    <a href="/topic/update?id=${queryData.id}">update</a>
+                    <form action="/topic/delete_process" method="post">
                         <input type="hidden" name="id" value="${queryData.id}">
                         <input type="submit" value="delete">
                     </form>`
@@ -61,7 +61,7 @@ exports.create = function(request, response) {
             var list = template.list(topics);
             var html = template.HTML(sanitizeHtml(title), list,
                 `
-                <form action="/create_process" method="post">
+                <form action="/topic/create_process" method="post">
                     <p><input type="text" name="title" placeholder="title"></p>
                     <p>
                         <textarea name="description" placeholder="description"></textarea>
@@ -74,7 +74,7 @@ exports.create = function(request, response) {
                     </p>
                 </form>
                 `,
-                `<a href="/create">create</a>`
+                `<a href="/topic/create">create</a>`
             );
             response.writeHead(200);
             response.end(html);
@@ -112,7 +112,7 @@ exports.update = function(request, response) {
                 var list = template.list(topics);
                 var html = template.HTML(sanitizeHtml(topic[0].title), list,
                     `
-                    <form action="/update_process" method="post">
+                    <form action="/topic/update_process" method="post">
                         <input type="hidden" name="id" value="${topic[0].id}">
                         <p><input type="text" name="title" placeholder="title"
                                    value="${sanitizeHtml(topic[0].title)}"></p>
@@ -128,7 +128,7 @@ exports.update = function(request, response) {
                         </p>
                     </form>
                     `,
-                    `<a href="/create">create</a> <a href="/update?id=${topic[0].id}">update</a>`
+                    `<a href="/topic/create">create</a> <a href="/update?id=${topic[0].id}">update</a>`
                 );
                 response.writeHead(200);
                 response.end(html);
