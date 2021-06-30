@@ -1,23 +1,28 @@
-const swaggerUi = require('swagger-ui-express');
-const swaggereJsdoc = require('swagger-jsdoc');
-
-const options = {
+let options = {
     swaggerDefinition: {
-        openapi: "3.0.0",
         info: {
-            title: 'Test API',
+            description: 'This is a sample server',
+            title: 'Swagger',
             version: '1.0.0',
-            description: 'Test API with express',
         },
         host: 'localhost:3000',
-        basePath: '/'
+        basePath: '/',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: "",
+            }
+        }
     },
-    apis: ['./swagger/*']
+    basedir: __dirname, //app absolute path
+    files: ['../swagger/*.js'] //Path to the API handle folder
 };
 
-const specs = swaggereJsdoc(options);
-
-module.exports = {
-    swaggerUi,
-    specs
-};
+module.exports = options;
