@@ -13,8 +13,11 @@ exports.home = function(request, response) {
             `<h2>${title}</h2>${description}`,
             `<a href="/topic/create">create</a>`
         );
-        response.writeHead(200);
-        response.end(html);
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.write(JSON.stringify({"indices": list}));
+        response.end();
+        // response.writeHead(200);
+        // response.end(html);
     });
 }
 

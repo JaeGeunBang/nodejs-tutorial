@@ -1,0 +1,31 @@
+# /swagger/author.yml
+
+paths:
+  /:
+    get:
+      tags:
+      - "index"
+      summary: "get indices"
+      description: ""
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: "index 결과"
+          $ref: '#/components/responses/Response_index'
+components:
+  schemas:
+    Author:
+      type: object
+      required:
+        - index
+      properties:
+        author:
+          type: string
+          description: index 정보
+  responses:
+    Response_index:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Author'
