@@ -46,5 +46,8 @@ app.get('/bar', function(req, res, next) {
   - 초기엔 0값이 들어감
 - 이후 /foo, /bar에 접속시 `req.session.views[/foo, /bar]`에 세션 값이 누적되어서 보여진다.
 - 실제 request header를 보면 쿠키에 `connect.sid`라는 쿠키가 전송되는것을 볼수 있다.
+- 참고로 세션은 서버의 메모리에 저장되므로, nodejs를 재시작하면 세션이 지워진다.
 
-![img2png](img/img2.png)
+![img2.png](img/img2.png)
+
+## session store

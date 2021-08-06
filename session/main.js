@@ -15,28 +15,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.use(express.static('public'));
 app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true
+    secret: 'keyboard cat', // secret은 다른사람에게 노출되면 안되는 값으로, 소스코드에 포함시켜도 안되고 파일로 별도 저장할것.
+    resave: false, // 데이터를 세션 저장소에 저장할지를 설정함. true면 세션 데이터의 변경 여부와 상관 없이 무조건 세션 저장소에 저장함
+    saveUninitialized: true // 세션의 구동여부를 설정함. true는 세션이 필요하기 전까지 세션을 구동하지 않고, false는 무조건 구동한다. false는 서버의 부담이 올수있음
 }));
 
-app.use(function(req, res, next) {
-    if (!req.session.views) {
-        req.session.views = {};
+app.get('/', function(req, res, next) {
+    console.log(req.session) ;
+    if(req.session.num === undefined) {
+        req.session.num = 1;
+    } else {
+        req.session.num = req.session.num + 1;
     }
-
-    var pathname = parseurl(req).pathname ;
-    req.session.views[pathname] = (req.session.views[pathname] || 0) + 1;
-
-    next();
-});
-
-app.get('/foo', function(req, res, next) {
-    res.send('you viewed this page ' + req.session.views['/foo'] + ' times')
-})
-
-app.get('/bar', function(req, res, next) {
-    res.send('you viewed this page ' + req.session.views['/bar'] + ' times')
+    res.send(`Views : ${req.session.num}`) ;
 })
 
 app.listen(3000, function() {
