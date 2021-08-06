@@ -1,4 +1,4 @@
-# Cookie-Session
+# Cookie
 
 ## Cookie 추가
 아래 코드를 통해 cookie를 추가할수 있다.
@@ -32,3 +32,10 @@ res.writeHead(200,{
 ]
 ```
 
+## 쿠키 옵션 (Path, Domain)
+```js
+'Set-Cookie': [
+    'Path=Path; Path=/cookie', // /cookie path 에 접속했을때만 생성
+    'Domain=Domain; Domain=o2.org' // 특정 도메인 접속시에만 생성
+]
+```

@@ -17,7 +17,9 @@ router.get('/', function(req, res, next) {
         'tasty_cookie=strawberry', // 세션 쿠키
         `Permanent=cookies; Max-Age=${60*60*24*30}`, // 영속 쿠키
         'Secure=Secure; Secure', // HTTPS 프로토콜로 통신할때만 쿠키 전송
-        'HttpOnly=HttpOnly; HttpOnly' // Http 통신때만 쿠키 전송
+        'HttpOnly=HttpOnly; HttpOnly', // Http 통신때만 쿠키 전송
+        'Path=Path; Path=/cookie', // /cookie path 에 접속했을때만 생성
+        'Domain=Domain; Domain=o2.org' // 특정 도메인 접속시에만 생성
     ]
   });
   res.end('Cookie!!')
