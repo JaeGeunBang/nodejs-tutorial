@@ -16,3 +16,19 @@ res.writeHead(200,{
 - Network - Request Header를 보면 쿠키가 생성되었음을 알수있다.
 
 
+## Cookie 종류
+세션 쿠키, 영속 쿠키?
+- `세션 쿠키`는 웹브라우저가 켜저 있는 동안에만 유효한 쿠키라 브라우저가 종료됐다가 다시 실행하거나 새로운 브라우저를 켜면 사라져 있음
+- `영속 쿠키`는 세션 쿠키의 Max-Age or Expires 같은 옵션을 설정하면 된다.
+
+## 쿠키 옵션 (Secure, HttpOnly)
+```js
+'Set-Cookie': [
+    'yummy_cookie=choco', // 세션 쿠키
+    'tasty_cookie=strawberry', // 세션 쿠키
+    `Permanent=cookies; Max-Age=${60*60*24*30}`, // 영속 쿠키
+    'Secure=Secure; Secure', // HTTPS 프로토콜로 통신할때만 쿠키 전송
+    'HttpOnly=HttpOnly; HttpOnly' // Http 통신때만 쿠키 전송
+]
+```
+

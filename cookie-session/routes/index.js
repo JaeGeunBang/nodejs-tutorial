@@ -12,7 +12,13 @@ router.get('/', function(req, res, next) {
   console.log(cookies)
   console.log(cookies.yummy_cookie)
   res.writeHead(200,{
-    'Set-Cookie': ['yummy_cookie=choco', 'tasty_cookie=strawberry']
+    'Set-Cookie': [
+        'yummy_cookie=choco', // 세션 쿠키
+        'tasty_cookie=strawberry', // 세션 쿠키
+        `Permanent=cookies; Max-Age=${60*60*24*30}`, // 영속 쿠키
+        'Secure=Secure; Secure', // HTTPS 프로토콜로 통신할때만 쿠키 전송
+        'HttpOnly=HttpOnly; HttpOnly' // Http 통신때만 쿠키 전송
+    ]
   });
   res.end('Cookie!!')
 });
