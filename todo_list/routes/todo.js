@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require('fs')
 
 router.get('/', function(req, res) {
-	res.json(true)
+	res.render('todo', { title: 'todo 화면' });
 })
 
 /* GET home page. */
